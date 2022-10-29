@@ -1,0 +1,59 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+        <img src="/static/images/logo.png" class="logo" />
+        <ul>
+
+          <li><a href="/">Home</a></li>
+          <li><a href="/catalog">All Crypto</a></li>
+          {{#if username}}
+            <li><a href="/catalog/search">Search</a></li>
+            <li><a href="/catalog/create">Create Offer</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+          {{else}}
+
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
+          {{/if}}
+
+        </ul>
+      </nav>
+    </header>
+    <main>
+      {{#if errors}}
+        <div>
+          <div class="errorContainer">
+
+            {{#each errors}}
+              <p>{{this}}</p>
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+
+      {{{body}}}
+    </main>
+    <footer>
+      <p>Back-End 2022</p>
+    </footer>
+  </body>
+</html>
+
+{{!-- <a href="/auth/login">Login</a> 
+    <a href="/auth/register">Register</a> 
+    <a href="/auth/logout">Logout</a>
+    {{#if errors}}
+        <div>
+            {{#each errors}}
+            <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
+    {{{body}}}  --}}
