@@ -22,28 +22,6 @@ catalogController.get("/", async (req, res) => {
   });
 });
 
-// //SEARCH ITEM
-
-// catalogController.get("/search", hasUser, async (req, res) => {
-//   const items = await getAll();
-//   res.render("search", {
-//     title: "Search",
-//     items,
-//   });
-// });
-
-// catalogController.post("/search", hasUser, async (req, res) => {
-//   const methodStr = req.body.method;
-//   const nameStr = req.body.name;
-
-//   const items = await getAllByStr(nameStr, methodStr);
-
-//   res.render("search", {
-//     title: "Search",
-//     items,
-//   });
-// });
-
 //CREATE ITEM
 catalogController.get("/create", hasUser, (req, res) => {
   res.render("create", {
@@ -86,12 +64,22 @@ catalogController.post("/create", async (req, res) => {
 catalogController.get("/details/:id", midUser, async (req, res) => {
   const itemId = req.params.id;
   const item = await getItem(itemId);
+  let subscribersId;
   let owner;
+  let followers = [];
   try {
     owner = await getUser(item.owner);
+    subscribersId = item.subscribeList;
+    for (let subscriberId of subscribersId) {
+      const follower = await getUser(subscriberId);
+      followers.push(follower.username);
+    }
   } catch (err) {
     return;
   }
+  let str;
+  if (followers) str = followers.join(", ");
+
   const user = req.user;
 
   res.render("details", {
@@ -99,6 +87,7 @@ catalogController.get("/details/:id", midUser, async (req, res) => {
     item,
     user,
     owner,
+    str,
   });
 });
 

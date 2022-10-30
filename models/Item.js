@@ -25,7 +25,7 @@ const itemSchema = new Schema({
   category: {
     type: String,
     required: true,
-    minlength: [3, "Category must be at least 10 characters long."],
+    minlength: [3, "Category must be at least 3 characters long."],
   },
   subscribeList: { type: [Types.ObjectId], ref: "User", default: [] },
   owner: { type: Types.ObjectId, ref: "User", required: true },
