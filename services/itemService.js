@@ -4,7 +4,7 @@ async function getAll() {
   try {
     return await Item.find({}).lean();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return;
   }
 }
@@ -30,7 +30,7 @@ async function getItem(itemId) {
   try {
     return await Item.findById(itemId).lean();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return;
   }
 }
@@ -69,14 +69,14 @@ async function updateItem(itemId, updatedItem) {
   }
 }
 
-// async function deleteItem(itemId) {
-//   try {
-//     await Item.findByIdAndRemove(itemId);
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+async function deleteItem(itemId) {
+  try {
+    await Item.findByIdAndRemove(itemId);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 
 module.exports = {
   createItem,
@@ -86,5 +86,5 @@ module.exports = {
   getItem,
   subscribeItem,
   updateItem,
-  // deleteItem,
+  deleteItem,
 };

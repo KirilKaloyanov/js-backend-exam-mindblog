@@ -86,7 +86,12 @@ catalogController.post("/create", async (req, res) => {
 catalogController.get("/details/:id", midUser, async (req, res) => {
   const itemId = req.params.id;
   const item = await getItem(itemId);
-  const owner = await getUser(item.owner);
+  let owner;
+  try {
+    owner = await getUser(item.owner);
+  } catch (err) {
+    return;
+  }
   const user = req.user;
 
   res.render("details", {
@@ -106,7 +111,8 @@ catalogController.get(
     const itemId = req.params.id;
     const user = req.user;
 
-    if (user.subscribe) return res.redirect("/error");
+    if (user.subscribed) return res.redirect("/error");
+    if (user.isOwner) return res.redirect("/error");
 
     await subscribeItem(itemId, user._id);
     res.redirect(`/catalog/details/${itemId}`);
@@ -136,28 +142,27 @@ catalogController.post("/edit/:id", async (req, res) => {
   } catch (err) {
     res.render("edit", {
       title: "Edit Page",
-      body: {
+      item: {
         name: req.body.name,
         imageUrl: req.body.imageUrl,
-        price: req.body.price,
         description: req.body.description,
-        method: req.body.method,
+        category: req.body.category,
       },
       errors: parseError(err),
     });
   }
 });
 
-// //DELETE ITEM
+//DELETE ITEM
 
-// catalogController.get("/delete/:id", [hasUser, midUser], async (req, res) => {
-//   const itemId = req.params.id;
-//   const user = req.user;
+catalogController.get("/delete/:id", [hasUser, midUser], async (req, res) => {
+  const itemId = req.params.id;
+  const user = req.user;
 
-//   if (!user.isOwner) return res.redirect("/error");
+  if (!user.isOwner) return res.redirect("/error");
 
-//   await deleteItem(itemId, req.body);
-//   res.redirect(`/catalog`);
-// });
+  await deleteItem(itemId, req.body);
+  res.redirect(`/catalog`);
+});
 
 module.exports = catalogController;

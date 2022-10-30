@@ -35,7 +35,12 @@ async function register(username, email, password) {
 }
 
 async function getUser(ownerId) {
-  return await User.findById(ownerId).lean();
+  try {
+    return await User.findById(ownerId).lean();
+  } catch (err) {
+    // console.log(err);
+    return null;
+  }
 }
 
 function createSession({ _id, username, email }) {
