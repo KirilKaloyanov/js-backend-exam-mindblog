@@ -36,10 +36,11 @@ async function register(username, email, password) {
 
 function logout() {}
 
-function createSession({ _id, username }) {
+function createSession({ _id, username, email }) {
   const payload = {
     _id,
     username,
+    email,
   };
 
   return jwt.sign(payload, JWT_SECRET);

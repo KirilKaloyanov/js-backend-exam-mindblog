@@ -16,7 +16,7 @@ const {
 catalogController.get("/", async (req, res) => {
   const items = await getAll();
   res.render("catalog", {
-    title: "Catalog",
+    title: "Catalog Page",
     items,
   });
 });
@@ -43,44 +43,42 @@ catalogController.get("/", async (req, res) => {
 //   });
 // });
 
-// //CREATE ITEM
-// catalogController.get("/create", hasUser, (req, res) => {
-//   res.render("create", {
-//     title: "Create Page",
-//   });
-// });
+//CREATE ITEM
+catalogController.get("/create", hasUser, (req, res) => {
+  res.render("create", {
+    title: "Create Page",
+  });
+});
 
-// catalogController.post("/create", async (req, res) => {
-//   const item = {
-//     name: req.body.name,
-//     imageUrl: req.body.imageUrl,
-//     price: req.body.price,
-//     description: req.body.description,
-//     method: req.body.method,
-//     owner: req.user._id,
-//   };
+catalogController.post("/create", async (req, res) => {
+  const item = {
+    name: req.body.name,
+    imageUrl: req.body.imageUrl,
+    description: req.body.description,
+    category: req.body.category,
+    owner: req.user._id,
+  };
 
-//   try {
-//     if (Object.values(item).filter((v) => !v).length > 0)
-//       throw new Error("All fields are required");
+  try {
+    if (Object.values(item).filter((v) => !v).length > 0)
+      throw new Error("All fields are required");
 
-//     await createItem(item);
-//     res.redirect("/catalog");
-//   } catch (err) {
-//     const errors = parseError(err);
-//     res.render("create", {
-//       title: "Create Page",
-//       body: {
-//         name: req.body.name,
-//         imageUrl: req.body.imageUrl,
-//         price: req.body.price,
-//         description: req.body.description,
-//         method: req.body.method,
-//       },
-//       errors,
-//     });
-//   }
-// });
+    await createItem(item);
+    res.redirect("/catalog");
+  } catch (err) {
+    const errors = parseError(err);
+    res.render("create", {
+      title: "Create Page",
+      body: {
+        name: req.body.name,
+        imageUrl: req.body.imageUrl,
+        description: req.body.description,
+        category: req.body.category,
+      },
+      errors,
+    });
+  }
+});
 
 // //ITEM DETAILS
 

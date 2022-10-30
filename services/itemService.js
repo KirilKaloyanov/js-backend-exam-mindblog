@@ -35,14 +35,14 @@ async function getAll() {
 //   }
 // }
 
-// async function createItem(item) {
-//   try {
-//     await Item.create(item);
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+async function createItem(item) {
+  // try {
+  await Item.create(item);
+  // } catch (err) {
+  //   console.log(err);
+  //   return err;
+  // }
+}
 
 // async function subscribeItem(itemId, userId) {
 //   try {
@@ -79,7 +79,7 @@ async function getAll() {
 // }
 
 module.exports = {
-  // createItem,
+  createItem,
   getAll,
   // getAllByStr,
   // getAllByUser,

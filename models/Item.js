@@ -6,8 +6,8 @@ const itemSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
-    min: [2, "Crypto name must be at least 2 characters long."],
+    minlength: [3, "Title must be at least 3 characters long."],
+    maxlength: [50, "Title must be up to 50 characters long."],
   },
   imageUrl: {
     type: String,
@@ -17,22 +17,15 @@ const itemSchema = new Schema({
       message: "Image URL is not valid",
     },
   },
-  price: {
-    type: Number,
-    required: true,
-    validate: {
-      validator: (value) => value >= 0,
-      message: "Price must be positive",
-    },
-  },
   description: {
     type: String,
     required: true,
-    min: [10, "Crypto description must be at least 10 characters long."],
+    minlength: [10, "Content must be at least 10 characters long."],
   },
-  method: {
+  category: {
     type: String,
-    enum: ["crypto-wallet", "credit-card", "debit-card", "paypal"],
+    required: true,
+    minlength: [3, "Category must be at least 10 characters long."],
   },
   subscribeList: { type: [Types.ObjectId], ref: "User", default: [] },
   owner: { type: Types.ObjectId, ref: "User", required: true },
