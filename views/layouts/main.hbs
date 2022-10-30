@@ -6,54 +6,47 @@
     <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
   <body>
-    <header class="header">
-      <nav>
-        <img src="/static/images/logo.png" class="logo" />
-        <ul>
+    {{#if errors}}
+      <div>
+        <div class="errorContainer">
 
-          <li><a href="/">Home</a></li>
-          <li><a href="/catalog">All Crypto</a></li>
+          {{#each errors}}
+            <p>{{this}}</p>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="navigation">
+      <nav>
+        <img src="/static/images/logo.jpg" />
+        <ul>
+          <!-- Guest users and Logged users -->
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Blogs</a></li>
+          <!--For loggin users-->
           {{#if username}}
-            <li><a href="/catalog/search">Search</a></li>
-            <li><a href="/catalog/create">Create Offer</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Create Blog</a></li>
+            <li><a href="#">Logout</a></li>
+
+            <!--For guest users-->
           {{else}}
 
-            <li><a href="/auth/login">Login</a></li>
-            <li><a href="/auth/register">Register</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Register</a></li>
           {{/if}}
 
         </ul>
       </nav>
-    </header>
-    <main>
-      {{#if errors}}
-        <div>
-          <div class="errorContainer">
+    </div>
 
-            {{#each errors}}
-              <p>{{this}}</p>
-            {{/each}}
-          </div>
-        </div>
-      {{/if}}
+    <main>
 
       {{{body}}}
     </main>
     <footer>
-      <p>Back-End 2022</p>
+      Back-End 2022
     </footer>
   </body>
 </html>
-
-{{!-- <a href="/auth/login">Login</a> 
-    <a href="/auth/register">Register</a> 
-    <a href="/auth/logout">Logout</a>
-    {{#if errors}}
-        <div>
-            {{#each errors}}
-            <p>{{this}}</p>
-            {{/each}}
-        </div>
-    {{/if}}
-    {{{body}}}  --}}

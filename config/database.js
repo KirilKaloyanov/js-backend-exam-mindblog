@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //TODO: change DB connection string
-const CONNECTION_STRING = "mongodb://localhost:27017/crypto";
+const CONNECTION_STRING = "mongodb://localhost:27017/mindblog";
 
 module.exports = async (app) => {
   try {
