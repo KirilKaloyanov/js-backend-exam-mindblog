@@ -1,13 +1,13 @@
 const Item = require("../models/Item");
 
-// async function getAll() {
-//   try {
-//     return await Item.find({}).lean();
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+async function getAll() {
+  try {
+    return await Item.find({}).lean();
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 
 // // PROFILE FILTERING
 
@@ -80,7 +80,7 @@ const Item = require("../models/Item");
 
 module.exports = {
   // createItem,
-  // getAll,
+  getAll,
   // getAllByStr,
   // getAllByUser,
   // getItem,

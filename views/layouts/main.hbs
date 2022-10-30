@@ -22,19 +22,19 @@
         <img src="/static/images/logo.jpg" />
         <ul>
           <!-- Guest users and Logged users -->
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Blogs</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/catalog">Blogs</a></li>
           <!--For loggin users-->
           {{#if username}}
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Create Blog</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/catalog/create">Create Blog</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
 
             <!--For guest users-->
           {{else}}
 
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
           {{/if}}
 
         </ul>

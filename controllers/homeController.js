@@ -9,10 +9,10 @@ homeController.get("/", (req, res) => {
   });
 });
 
-// homeController.get("/error", (req, res) => {
-//   res.render("error", {
-//     title: "404 Page",
-//   });
-// });
+homeController.get("/error", (req, res) => {
+  res.render("error", {
+    title: "404 Page",
+  });
+});
 
 module.exports = homeController;

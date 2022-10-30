@@ -11,15 +11,15 @@ const {
   deleteItem,
 } = require("../services/itemService");
 
-// // GET ITEMS
+// GET ITEMS
 
-// catalogController.get("/", async (req, res) => {
-//   const items = await getAll();
-//   res.render("catalog", {
-//     title: "Catalog",
-//     items,
-//   });
-// });
+catalogController.get("/", async (req, res) => {
+  const items = await getAll();
+  res.render("catalog", {
+    title: "Catalog",
+    items,
+  });
+});
 
 // //SEARCH ITEM
 
