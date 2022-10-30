@@ -9,6 +9,18 @@ async function getAll() {
   }
 }
 
+async function getThreeItems() {
+  try {
+    const items = await Item.find({}).lean();
+    items.reverse();
+    const result = items.slice(0, 3);
+    return result;
+  } catch (err) {
+    // console.log(err);
+    return;
+  }
+}
+
 // // PROFILE FILTERING
 
 // async function getAllByUser(userId) {
@@ -81,6 +93,7 @@ async function deleteItem(itemId) {
 module.exports = {
   createItem,
   getAll,
+  getThreeItems,
   // getAllByStr,
   // getAllByUser,
   getItem,

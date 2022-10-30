@@ -1,11 +1,14 @@
 const homeController = require("express").Router();
+const { getThreeItems } = require("../services/itemService");
 
 //TODO replace with real controller by assignment
 
-homeController.get("/", (req, res) => {
+homeController.get("/", async (req, res) => {
+  const items = await getThreeItems();
   res.render("home", {
     title: "Mind Blog",
     user: req.user,
+    items,
   });
 });
 
