@@ -1,4 +1,5 @@
 const homeController = require("express").Router();
+const { hasUser } = require("../middlewares/guards");
 const {
   getThreeItems,
   getAllFollowed,
@@ -16,7 +17,7 @@ homeController.get("/", async (req, res) => {
   });
 });
 
-homeController.get("/profile", async (req, res) => {
+homeController.get("/profile", hasUser, async (req, res) => {
   const user = req.user;
   const itemsFollowed = await getAllFollowed(user._id);
   const itemsFollowedCount = itemsFollowed.length;
