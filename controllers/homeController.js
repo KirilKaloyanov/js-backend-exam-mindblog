@@ -1,5 +1,9 @@
 const homeController = require("express").Router();
-const { getThreeItems } = require("../services/itemService");
+const {
+  getThreeItems,
+  getAllFollowed,
+  getAllCreated,
+} = require("../services/itemService");
 
 //TODO replace with real controller by assignment
 
@@ -9,6 +13,22 @@ homeController.get("/", async (req, res) => {
     title: "Mind Blog",
     user: req.user,
     items,
+  });
+});
+
+homeController.get("/profile", async (req, res) => {
+  const user = req.user;
+  const itemsFollowed = await getAllFollowed(user._id);
+  const itemsFollowedCount = itemsFollowed.length;
+  const itemsCreated = await getAllCreated(user._id);
+  const itemsCreatedCount = itemsCreated.length;
+  res.render("profile", {
+    title: "Profile Page",
+    user,
+    itemsFollowed,
+    itemsFollowedCount,
+    itemsCreated,
+    itemsCreatedCount,
   });
 });
 

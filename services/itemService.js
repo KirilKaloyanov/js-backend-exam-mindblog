@@ -23,20 +23,17 @@ async function getThreeItems() {
 
 // // PROFILE FILTERING
 
-// async function getAllByUser(userId) {
-//   const items = await Item.find({}).lean();
-//   return items.filter((b) =>
-//     b.subscribeList.map((b) => b.toString()).includes(userId._id)
-//   );
-// }
+async function getAllFollowed(userId) {
+  const items = await Item.find({}).lean();
+  return items.filter((b) =>
+    b.subscribeList.map((b) => b.toString()).includes(userId)
+  );
+}
 
-// // SEARCH ENGINE FILTERING
-// async function getAllByStr(nameStr, methodStr) {
-//   let items = await Item.find({ method: methodStr }).lean();
-//   const nameStrI = nameStr.toLowerCase();
-//   items = items.filter((i) => i.name.toLowerCase().includes(nameStrI));
-//   return items;
-// }
+async function getAllCreated(userId) {
+  const items = await Item.find({}).lean();
+  return items.filter((b) => b.owner.toString().includes(userId));
+}
 
 async function getItem(itemId) {
   try {
@@ -94,8 +91,8 @@ module.exports = {
   createItem,
   getAll,
   getThreeItems,
-  // getAllByStr,
-  // getAllByUser,
+  getAllFollowed,
+  getAllCreated,
   getItem,
   subscribeItem,
   updateItem,
