@@ -34,7 +34,9 @@ async function register(username, email, password) {
   return createSession(user);
 }
 
-function logout() {}
+async function getUser(ownerId) {
+  return await User.findById(ownerId).lean();
+}
 
 function createSession({ _id, username, email }) {
   const payload = {
@@ -53,7 +55,7 @@ function verifyToken(token) {
 module.exports = {
   login,
   register,
-  logout,
+  getUser,
   createSession,
   verifyToken,
 };

@@ -10,6 +10,7 @@ const {
   updateItem,
   deleteItem,
 } = require("../services/itemService");
+const { getUser } = require("../services/userService");
 
 // GET ITEMS
 
@@ -80,70 +81,72 @@ catalogController.post("/create", async (req, res) => {
   }
 });
 
-// //ITEM DETAILS
+//ITEM DETAILS
 
-// catalogController.get("/details/:id", midUser, async (req, res) => {
-//   const itemId = req.params.id;
-//   const item = await getItem(itemId);
-//   const user = req.user;
+catalogController.get("/details/:id", midUser, async (req, res) => {
+  const itemId = req.params.id;
+  const item = await getItem(itemId);
+  const owner = await getUser(item.owner);
+  const user = req.user;
 
-//   res.render("details", {
-//     title: "Details Page",
-//     item,
-//     user,
-//   });
-// });
+  res.render("details", {
+    title: "Details Page",
+    item,
+    user,
+    owner,
+  });
+});
 
-// // SUBSCRIBE
+// SUBSCRIBE
 
-// catalogController.get(
-//   "/subscribe/:id",
-//   [hasUser, midUser],
-//   async (req, res) => {
-//     const itemId = req.params.id;
-//     const user = req.user;
+catalogController.get(
+  "/subscribe/:id",
+  [hasUser, midUser],
+  async (req, res) => {
+    const itemId = req.params.id;
+    const user = req.user;
 
-//     if (user.subscribe) return res.redirect("/error");
+    if (user.subscribe) return res.redirect("/error");
 
-//     await subscribeItem(itemId, user._id);
-//     res.redirect(`/catalog/details/${itemId}`);
-//   }
-// );
+    await subscribeItem(itemId, user._id);
+    res.redirect(`/catalog/details/${itemId}`);
+  }
+);
 
-// //EDIT ITEM
+//EDIT ITEM
 
-// catalogController.get("/edit/:id", [hasUser, midUser], async (req, res) => {
-//   const itemId = req.params.id;
-//   const item = await getItem(itemId);
-//   const user = req.user;
+catalogController.get("/edit/:id", [hasUser, midUser], async (req, res) => {
+  const itemId = req.params.id;
+  const item = await getItem(itemId);
+  const user = req.user;
 
-//   if (!user.isOwner) return res.redirect("/error");
+  if (!user.isOwner) return res.redirect("/error");
 
-//   res.render("edit", {
-//     title: "Edit Page",
-//     item,
-//   });
-// });
+  res.render("edit", {
+    title: "Edit Page",
+    item,
+  });
+});
 
-// catalogController.post("/edit/:id", async (req, res) => {
-//   try {
-//     const itemId = req.params.id;
-//     await updateItem(itemId, req.body);
-//     res.redirect(`/catalog/details/${itemId}`);
-//   } catch (err) {
-//     res.render("edit", {
-//       title: "Edit Page",
-//       body: {
-//         name: req.body.name,
-//         imageUrl: req.body.imageUrl,
-//         price: req.body.price,
-//         description: req.body.description,
-//         method: req.body.method,
-//       },
-//       errors: parseError(err),
-//     });
-//   }
-// });
+catalogController.post("/edit/:id", async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    await updateItem(itemId, req.body);
+    res.redirect(`/catalog/details/${itemId}`);
+  } catch (err) {
+    res.render("edit", {
+      title: "Edit Page",
+      body: {
+        name: req.body.name,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        description: req.body.description,
+        method: req.body.method,
+      },
+      errors: parseError(err),
+    });
+  }
+});
 
 // //DELETE ITEM
 

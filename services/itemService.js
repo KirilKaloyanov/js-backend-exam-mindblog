@@ -26,14 +26,14 @@ async function getAll() {
 //   return items;
 // }
 
-// async function getItem(itemId) {
-//   try {
-//     return await Item.findById(itemId).lean();
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+async function getItem(itemId) {
+  try {
+    return await Item.findById(itemId).lean();
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 
 async function createItem(item) {
   // try {
@@ -44,30 +44,30 @@ async function createItem(item) {
   // }
 }
 
-// async function subscribeItem(itemId, userId) {
-//   try {
-//     const item = await Item.findById(itemId);
-//     item.subscribeList.push(userId);
+async function subscribeItem(itemId, userId) {
+  try {
+    const item = await Item.findById(itemId);
+    item.subscribeList.push(userId);
 
-//     await item.save();
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+    await item.save();
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 
-// async function updateItem(itemId, updatedItem) {
-//   try {
-//     const item = await Item.findById(itemId);
+async function updateItem(itemId, updatedItem) {
+  try {
+    const item = await Item.findById(itemId);
 
-//     Object.assign(item, updatedItem);
+    Object.assign(item, updatedItem);
 
-//     await item.save();
-//   } catch (err) {
-//     console.log(err);
-//     return;
-//   }
-// }
+    await item.save();
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 
 // async function deleteItem(itemId) {
 //   try {
@@ -83,8 +83,8 @@ module.exports = {
   getAll,
   // getAllByStr,
   // getAllByUser,
-  // getItem,
-  // subscribeItem,
-  // updateItem,
+  getItem,
+  subscribeItem,
+  updateItem,
   // deleteItem,
 };
